@@ -26,6 +26,7 @@ import net.crashcraft.crashclaim.pluginsupport.PluginSupport;
 import net.crashcraft.crashclaim.pluginsupport.PluginSupportManager;
 import net.crashcraft.crashclaim.update.UpdateManager;
 import net.crashcraft.crashclaim.visualize.VisualizationManager;
+import net.crashcraft.crashclaim.wand.ClaimWandHandler;
 import net.crashcraft.crashpayment.CrashPayment;
 import net.crashcraft.crashpayment.payment.PaymentProcessor;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
@@ -59,6 +60,7 @@ public class CrashClaim extends JavaPlugin {
     private MigrationManager migrationManager;
     private BukkitAudiences adventure;
     private UpdateManager updateManager;
+    private ClaimWandHandler claimWandHandler;
 
     @Override
     public void onLoad() {
@@ -106,6 +108,8 @@ public class CrashClaim extends JavaPlugin {
         new PermissionHelper(manager);
 
         this.migrationManager = new MigrationManager(this);
+
+        claimWandHandler = new ClaimWandHandler();
 
         Bukkit.getPluginManager().registerEvents(new WorldListener(manager, visualizationManager), this);
         Bukkit.getPluginManager().registerEvents(new PlayerListener(manager, visualizationManager), this);
@@ -259,5 +263,9 @@ public class CrashClaim extends JavaPlugin {
 
     public UpdateManager getUpdateManager() {
         return updateManager;
+    }
+
+    public ClaimWandHandler getClaimWandHandler() {
+        return claimWandHandler;
     }
 }

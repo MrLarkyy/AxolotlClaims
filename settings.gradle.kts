@@ -1,1 +1,1 @@
-rootProject.name = "CrashClaim"
+rootProject.name = "AxolotlClaim"

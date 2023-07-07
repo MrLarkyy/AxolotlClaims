@@ -7,6 +7,7 @@ import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
@@ -15,7 +16,6 @@ public class GlobalConfig extends BaseConfig{
     public static String paymentProvider;
     public static boolean checkUpdates;
     public static boolean skipNaturalMobGrief;
-
     private static void loadGeneral(){
         locale = getString("language", "en_US");
         paymentProvider = getString("payment-provider", "default");

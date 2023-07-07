@@ -76,6 +76,12 @@ public class ClaimCommand extends BaseCommand implements Listener {
         }
     }
 
+    @CommandAlias("claimwand")
+    @CommandPermission("crashclaim.user.subclaim")
+    public void claimWand(Player player) {
+        player.getInventory().addItem(CrashClaim.getPlugin().getClaimWandHandler().getClaimWand());
+    }
+
     @CommandAlias("subclaim")
     @CommandPermission("crashclaim.user.subclaim")
     public void subClaim(Player player){
@@ -129,6 +135,19 @@ public class ClaimCommand extends BaseCommand implements Listener {
                 || !e.getHand().equals(EquipmentSlot.HAND)
                 || e.getClickedBlock() == null){
             return;
+        }
+
+        UUID uuid = e.getPlayer().getUniqueId();
+        Player player = e.getPlayer();
+        if (!modeMap.containsKey(uuid) && CrashClaim.getPlugin().getClaimWandHandler().isClaimWand(player.getInventory().getItemInMainHand())) {
+            forceCleanup(uuid, true);
+
+            modeMap.put(uuid, ClickState.CLAIM);
+            visualizationManager.visualizeSurroundingClaims(player, dataManager);
+            visualizationManager.sendAlert(player, Localization.CLAIM__ENABLED.getMessage(player));
+            player.spigot().sendMessage(Localization.NEW_CLAIM__INFO.getMessage(player));
+
+            e.setCancelled(true);
         }
 
         click(e.getPlayer(), e.getClickedBlock().getLocation());
